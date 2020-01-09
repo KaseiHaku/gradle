@@ -1,4 +1,4 @@
-package kasei.java;
+package kasei.gradle.java;
 
 public class Haku {
 

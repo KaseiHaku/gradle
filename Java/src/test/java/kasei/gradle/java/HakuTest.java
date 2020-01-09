@@ -1,6 +1,4 @@
-package kasei.java;
-
-import static org.junit.jupiter.api.Assertions.*;
+package kasei.gradle.java;
 
 class HakuTest {
 

@@ -8,7 +8,12 @@
  */
 
 rootProject.name = 'Gradle'
+
+// include 'Java:SE:EE'  // 表示有3个项目，分别是 Java, Java:SE, Java:SE:EE
+
 include 'Java'
 include 'Web'
 include 'Boot'
+
+
 

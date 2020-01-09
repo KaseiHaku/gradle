@@ -9,11 +9,11 @@ plugins {
     // java 项目编译等操作，不能 apply false
     id 'java' 
     // java 控制台 app 需要的额外操作，不能 apply false
-    id 'application'
+    // id 'application'
     // 用于 java 打包成 jar 包的操作，不能 apply false
-    id 'java-library'
+    // id 'java-library'
     // 用于 java web 项目打成 war 包，不能 apply false
-    id 'war'
+    // id 'war'
     // 用于运行 java web 项目 
     id 'org.gretty' version '3.0.1' apply false
     // 作用： 引入 gradle 构建 spring boot 项目所需要的 task，且引入的 task 会根据 gradle 中引入的插件动态变化
@@ -30,6 +30,8 @@ allprojects {
         maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
         mavenCentral()
         jcenter()
+        // 自己添加的目录作为仓库
+        flatDir { dirs 'lib1', 'lib2' }
     }
 }
 
@@ -46,14 +48,23 @@ subprojects {
 
 
     configurations {
-        all() {
-            Configuration configuration ->
-                //当遇到版本冲突时直接构建失败
-                configuration.resolutionStrategy.failOnVersionConflict()
-        }
+
         testCompile.exclude group: 'org.junit.vintage'  // 排除掉 Junit5 兼容 Junit4 的 jar 包
     }
+
+    configurations.all { // 同时拥有不同版本的实现类的时候的解决办法
+        // 高版本优先
+        resolutionStrategy.capabilitiesResolution.withCapability('org.ow2.asm:asm') {
+            selectHighestVersion() 
+        }
+        
+        // 手工指定用哪个版本
+        resolutionStrategy.capabilitiesResolution.withCapability("log4j:log4j") {
+            select(candidates.find { it.id instanceof ModuleComponentIdentifier && it.id.module == 'log4j-over-slf4j' } )
+            because 'use slf4j in place of log4j'
+        }
     
+    }
 
 
     dependencies {
@@ -74,7 +85,31 @@ subprojects {
         /** TODO Test */
         testImplementation group: 'org.junit.platform', name: 'junit-platform-launcher'
         testCompile group: 'org.junit.jupiter', name: 'junit-jupiter'
-        
+
+        /** TODO Dependency Demo */
+        // implementation project(":lib") // 依赖本地项目
+        // runtimeOnly group: 'org.hibernate', name: 'hibernate', version: '3.0.5', transitive: true  // transitive: 传递的，gradle 中用于表示传递性依赖
+        // implementation fileTree('tools') { include '*.exe' } // 依赖指定目录下的 jar 包
+
+        /** TODO Resolve Demo of Dependency Conflict */
+
+        implementation('org.slf4j:slf4j-api') {  // 放在依赖里面处理冲突
+            version {
+                strictly '[1.7, 1.8['
+                prefer '1.7.25'
+            }
+        }
+        constraints {  // 放在约束里面处理冲突
+            implementation('org.springframework:spring-core') {
+                version {
+                    // strictly '4.2.9.RELEASE'
+                    // prefer '4.2.9.RELEASE'
+                    // require '4.2.9.RELEASE'
+                    // reject '4.3.16.RELEASE'
+                }
+            }
+        }
+
 
     }
 

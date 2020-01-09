@@ -1,0 +1,71 @@
+创建一个 gradle 空项目 {
+    shell> mkdir GradleDemo
+    shell> cd GradleDemo
+    shell> gradle init
+    shell> gradle init --type java-library  # 使用项目模板创建目录
+
+    # 以下是创建的目录结构
+    .
+    ├── build.gradle    # gradle 的构建脚本
+    ├── settings.gradle # gradle 的配置文件
+    ├── gradle
+    │   └── wrapper
+    │       ├── gradle-wrapper.jar  # wrapper 用于下载 gradle distribution 的 jar 包
+    │       └── gradle-wrapper.properties # 配置文件，指定 wrapper 运行时的行为
+    ├── gradlew # 用 wrapper 构建项目的脚本， *nux 下的
+    └── gradlew.bat # 用 wrapper 构建项目的脚本， windows 下的
+}
+
+在原先只有 gradle 的项目中创建 gradle wrapper {
+    shell> gradle wrapper  // 之后所有 shell> gradle 命令都可以用 shell> ./gradlew 或 shell> ./gradlew.bat 替换
+}
+
+Lifecycle {
+    Initialization: 执行 settings.gradle ，为所有项目（包括子项目）创建一个 Project 实例
+    Configuration: 执行所有项目的 build.gradle 脚本来完成 Project 实例的配置
+    Execution: 执行 shell> gradle taskName 传递进来的 taskName 任务
+}
+
+
+Console {
+    shell> gralde [taskName1 taskName2 ...] [--optionName1=value1 --optionName2 --no-optionName3]  # 命令行格式
+
+}
+
+Project {
+    shell> ./gradlew projects                      # 列出你所在项目下的所有 subProject
+    shell> ./gradlew properties                    # 查看当前项目的所有属性
+    shell> ./gradlew model                          # 查看软件模型报告
+}
+
+Task {
+    #### Query
+    shell> ./gradlew tasks --all                    # help 分组下面的所有任务都是  gradle 自带的任务
+    shell> ./gradlew help --task taskName           # 显示 task 的用法
+    shell> ./gradlew taskName --scan                # 查看当前任务的依赖
+
+    #### Execute
+    shell> ./gradlew taskName                   # 执行一个 gradle task，多模块时，则运行所有项目的 taskName 任务
+    shell> ./gradlew :mySubproject:taskName     # 在 RootProject 中执行一个 SubProject 中的 task
+    shell> ../gradlew taskName                  # 如果当前工作目录已经在 SubProject 中时，执行当前 SubProject 的 task，注意 /gradlew 前面时两个点
+
+    shell> ./gradlew dist --exclude-task test   # 执行 dist 任务，排除依赖任务 test ，即不执行 test 任务
+    shell> ./gradlew taskName --continue           # 当执行时，遇到错误时继续执行，以便查看是否其他地方还有错误
+    shell> ./gradlew task1 task2                # 执行多个任务
+
+
+}
+
+Dependency {
+
+    shell> ./gradlew dependencies                  # 查看当前所在目录的项目的依赖
+    shell> ./gradlew dependencies --configuration
+    shell> ./gradlew buildEnviorment               # 查看构建时的依赖
+    shell> ./gradlew dependencyInsight             # 提示你所需要的依赖
+}
+
+
+
+
+
+

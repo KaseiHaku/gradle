@@ -1,4 +1,4 @@
-package kasei.web;
+package kasei.gradle.web;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
