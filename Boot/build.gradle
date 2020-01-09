@@ -1,0 +1,43 @@
+
+plugins {
+    id 'java'
+    id 'idea'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management' 
+}
+
+configurations {
+    compile.exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'  // 排除掉 spring 默认的日志框架(logback)
+}
+
+dependencies {
+    
+    /** TODO Convenient Develop */
+    // 自动生成 getter setter，而不用写在代码里，需要 IDEA 安装 lombok 插件，并修改 "Settings > Build > Compiler > Annotation Processors" 为 Enable
+    annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.10'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-devtools'         // 开发工具，实现 spring boot 项目热部署
+
+    /** TODO Test */
+    testImplementation group: 'org.junit.platform', name: 'junit-platform-launcher'
+    testImplementation group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testImplementation group: 'org.springframework', name: 'spring-mock', version: '2.0.8'
+
+
+    /** TODO Config */
+    // spring boot 默认只能注入 yml 里面的配置，引入这个可以注入 .xml 或 .properties 文件的配置，例如：@PropertySource("classpath:your.properties")
+    implementation group: 'org.springframework.boot', name: 'spring-boot-configuration-processor'
+
+
+    /** TODO Logging */
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-log4j2'
+    testImplementation group: 'org.slf4j', name: 'slf4j-log4j12'
+
+
+    /** TODO Web */
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-web'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-webflux'
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-json'
+
+    /** TODO Persistence */
+    implementation group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
+}

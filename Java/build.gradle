@@ -1,0 +1,41 @@
+plugins {
+    id 'base'
+    id 'java'
+    id 'application'
+    id 'java-library'
+    id 'org.springframework.boot'
+    id 'io.spring.dependency-management'
+    id 'idea'
+}
+
+/** TODO 依赖于 base 插件 ********************************************************************/
+task copy(type: Copy, group: "Custom", description: "Copies sources to the dest directory") {
+    from "src"
+    into "build/dest"
+}
+
+task zip(type: Zip, group: 'Custom', description: 'Archives sources in a zip file'){
+    from 'src'
+    setZip64 true
+    setMetadataCharset 'utf-8'
+}
+
+/** TODO 依赖于 application 插件 ********************************************************************/
+// ApplicationPluginConvention 类中的属性
+mainClassName = 'kasei.java.Haku'
+
+/** TODO 依赖于 java-library 插件 ********************************************************************/
+jar {
+    manifest {
+        // 配置 META-INF/MANIFEST.MF 中的属性
+        attributes(
+            'Implementation-Title': project.name,
+            'Implementation-Version': project.version
+        )
+    }
+}
+
+
+
+
+

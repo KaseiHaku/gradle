@@ -1,0 +1,11 @@
+# 排除掉根目录（SpringCloud）下，所有 .kasei 结尾的文件
+/*.kasei
+
+# 排除掉任何名为 out 的目录
+/**/out/
+
+# Ignore Gradle build output directory
+/**/build/
+
+# Ignore Gradle project-specific cache directory
+/.gradle/

@@ -1,0 +1,86 @@
+
+
+/** TODO 将所有插件定义到 root project，
+ * apply false: 表示将插件添加到所有项目中，除了 root project 
+ * */
+plugins {
+    // 基本的打包压缩操作，不能 apply false
+    id 'base'      
+    // java 项目编译等操作，不能 apply false
+    id 'java' 
+    // java 控制台 app 需要的额外操作，不能 apply false
+    id 'application'
+    // 用于 java 打包成 jar 包的操作，不能 apply false
+    id 'java-library'
+    // 用于 java web 项目打成 war 包，不能 apply false
+    id 'war'
+    // 用于运行 java web 项目 
+    id 'org.gretty' version '3.0.1' apply false
+    // 作用： 引入 gradle 构建 spring boot 项目所需要的 task，且引入的 task 会根据 gradle 中引入的插件动态变化
+    id 'org.springframework.boot' version '2.2.2.RELEASE' apply false
+    // 作用： 让 srping boot 来管理各个依赖的版本，而不是手工指定，
+    // 好处： spring boot 管理的各个版本的依赖，都是经过测试的
+    id 'io.spring.dependency-management' version "1.0.8.RELEASE" apply false
+    // IDEA 整合操作，不能 apply false
+    id 'idea'
+}
+
+allprojects {
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public" }
+        mavenCentral()
+        jcenter()
+    }
+}
+
+
+subprojects {
+
+    apply plugin: 'java'
+    apply plugin: 'io.spring.dependency-management'
+
+
+    sourceCompatibility = JavaVersion.VERSION_11        // 项目中代码使用的 JDK 版本
+    targetCompatibility = JavaVersion.VERSION_11         // 编译后的 .class 文件的 JDK 版本
+    version = '0.0.1'
+
+
+    configurations {
+        all() {
+            Configuration configuration ->
+                //当遇到版本冲突时直接构建失败
+                configuration.resolutionStrategy.failOnVersionConflict()
+        }
+        testCompile.exclude group: 'org.junit.vintage'  // 排除掉 Junit5 兼容 Junit4 的 jar 包
+    }
+    
+
+
+    dependencies {
+
+        /** todo Gradle 支持的依赖方式
+         * compileOnly — for dependencies that are necessary to compile your production code but shouldn’t be part of the runtime classpath
+         * implementation (supersedes compile) — used for compilation and runtime
+         * runtimeOnly (supersedes runtime) — only used at runtime, not for compilation
+         * testCompileOnly — same as compileOnly except it’s for the tests
+         * testImplementation — test equivalent of implementation
+         * testRuntimeOnly — test equivalent of runtimeOnly
+         * */
+
+        /** TODO Convenient Develop */
+        // 自动生成 getter setter，而不用写在代码里，需要 IDEA 安装 lombok 插件，并修改 "Settings > Build > Compiler > Annotation Processors" 为 Enable
+        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.10'
+
+        /** TODO Test */
+        testImplementation group: 'org.junit.platform', name: 'junit-platform-launcher'
+        testCompile group: 'org.junit.jupiter', name: 'junit-jupiter'
+        
+
+    }
+
+    /** TODO 表明用于编译的 .java 文件的编码格式是 UTF-8 */
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
+    }
+
+}
