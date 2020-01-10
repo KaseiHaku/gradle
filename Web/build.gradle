@@ -2,32 +2,30 @@ plugins {
     id 'base'
     id 'java'
     id 'war'
-    id 'org.gretty'
-    id 'org.springframework.boot'
     id 'io.spring.dependency-management'
+    id 'org.gretty'
     id 'idea'
 }
 
 dependencies {
     
     compileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
-    testCompileOnly group: 'javax.servlet', name: 'javax.servlet-api', version: '4.0.1'
 
 }
 
 
 
 war {
-    webXml = new File('src/webapp/WEB-INF/web.xml')
+    webXml = new File('src/main/webapp/WEB-INF/web.xml')
 }
 
-/** TODO 依赖于 org.gretty 插件 ********************************************************************/
+/** TODO 插件 org.gretty 的 DSL ********************************************************************/
 gretty {
     // 官方文档 https://gretty-gradle-plugin.github.io/gretty-doc/
     httpPort  = 8080        // 端口默认8080
     contextPath = '/Web'    // contextPath 设置根路径，默认为项目名称
 
     servletContainer = 'jetty9.4'
-    // jetty94Version = '9.4.25.v20191220'
+    jetty94Version = '9.4.25.v20191220'
 }
 
