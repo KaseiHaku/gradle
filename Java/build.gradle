@@ -39,6 +39,9 @@ sourceSets {
 /** TODO 依赖于 application 插件 ********************************************************************/
 // ApplicationPluginConvention 类中的属性
 mainClassName = 'kasei.java.Haku'
+application {
+    applicationDefaultJvmArgs = ['-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=43567']
+}
 
 /** TODO 依赖于 java-library 插件 ********************************************************************/
 jar {
