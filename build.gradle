@@ -21,6 +21,8 @@ plugins {
     // 作用： 让 srping boot 来管理各个依赖的版本，而不是手工指定，
     // 好处： spring boot 管理的各个版本的依赖，都是经过测试的
     id 'io.spring.dependency-management' version "1.0.8.RELEASE" apply false
+    // 作用：让 Entity 类不用写 getter setter
+    id "io.freefair.lombok" version "4.1.6"
     // IDEA 整合操作，不能 apply false
     id 'idea'
 }
