@@ -23,14 +23,15 @@ task zip(type: Zip, group: 'Custom', description: 'Archives sources in a zip fil
 /** TODO 依赖于 java 插件 ********************************************************************/
 sourceSets {
     main {
-         java {
-            srcDirs = ['src']
-         }
+        java {
+            srcDirs = ['src/main/java']
+            exclude 'kasei/spring/transaction/**'
+        }
     }
 
     test {
         java {
-            srcDirs = ['test']
+            srcDirs = ['src/test/java']
         }
     }
 }
