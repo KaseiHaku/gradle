@@ -11,8 +11,14 @@ plugins {
 
 /** TODO 单元测试配置 ********************************************************************/
 test {
-    useJUnitPlatform()
+    useJUnitPlatform {
+        systemProperties = [
+                'junit.platform.output.capture.stdout': 'true',
+                'junit.platform.output.capture.stderr': 'true'
+        ]
+    }
 }
+
 
 /** TODO 依赖于 base 插件 ********************************************************************/
 task copy(type: Copy, group: "Custom", description: "Copies sources to the dest directory") {
