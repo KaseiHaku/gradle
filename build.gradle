@@ -125,9 +125,7 @@ subprojects {
     test {
 
         testLogging {
-            // shell> gradle --stacktrace test --tests kasei.spring.SpringTests.testMethod
-            // shell> gradle --inof test --tests kasei.spring.SpringTests.testMethod
-            // shell> gradle --debug test --tests kasei.spring.SpringTests.testMethod
+            // shell> gradle --debug test --tests kasei.spring.SpringTests.testMethod | grep 'TestEventLogger'
             events 'STARTED', 'PASSED', 'SKIPPED', 'FAILED', 'STANDARD_OUT', 'STANDARD_ERROR'
         }
 
