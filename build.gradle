@@ -119,5 +119,23 @@ subprojects {
     tasks.withType(JavaCompile) {
         options.encoding = "UTF-8"
     }
+    
+    
+    /** TODO 单元测试配置 ********************************************************************/
+    test {
+
+        testLogging {
+            // shell> gradle --stacktrace test --tests kasei.spring.SpringTests.testMethod
+            events 'STARTED', 'PASSED', 'SKIPPED', 'FAILED', 'STANDARD_OUT', 'STANDARD_ERROR'
+        }
+
+        useJUnitPlatform {
+            systemProperties = [
+                    'junit.platform.output.capture.stdout': 'true',
+                    'junit.platform.output.capture.stderr': 'true'
+            ]
+        }
+    }
+
 
 }
