@@ -8,6 +8,12 @@ plugins {
     id 'idea'
 }
 
+
+/** TODO 单元测试配置 ********************************************************************/
+test {
+    useJUnitPlatform()
+}
+
 /** TODO 依赖于 base 插件 ********************************************************************/
 task copy(type: Copy, group: "Custom", description: "Copies sources to the dest directory") {
     from "src"
