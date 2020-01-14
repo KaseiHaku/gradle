@@ -81,8 +81,14 @@ subprojects {
          * */
 
         /** TODO Convenient Develop */
-        // 自动生成 getter setter，而不用写在代码里，需要 IDEA 安装 lombok 插件，并修改 "Settings > Build > Compiler > Annotation Processors" 为 Enable
-        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.10'
+        /** lombok
+         * 自动生成 getter setter，而不用写在代码里，需要 IDEA 安装 lombok 插件，并修改 "Settings > Build > Compiler > Annotation Processors" 为 Enable
+         * annotationProcessor 是为 gradle 引入 lombok 编译时注解处理器的依赖
+         * compileOnly 是说明编译期需要 lombok 依赖， 
+         * annotationProcessor 和 compileOnly 必须同时依赖 lombok，否则报错
+         * */
+        annotationProcessor group: 'org.projectlombok', name: 'lombok', version: '1.18.10'     
+        compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.10'
 
         /** TODO Test */
         testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.2'
