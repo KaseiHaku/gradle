@@ -1,3 +1,14 @@
+/** TODO build.gradle 文件中所有的 Build script blocks 
+ * allprojects { }
+ * artifacts { }
+ * buildscript { }
+ * configurations { }
+ * dependencies { }
+ * repositories { }
+ * sourceSets { }
+ * subprojects { }
+ * publishing { }
+ * */
 
 
 /** TODO 将所有插件定义到 root project，
@@ -47,7 +58,7 @@ subprojects {
     sourceCompatibility = JavaVersion.VERSION_11        // 项目中代码使用的 JDK 版本
     targetCompatibility = JavaVersion.VERSION_11         // 编译后的 .class 文件的 JDK 版本
     version = '0.0.1'
-
+    
 
     configurations {
 
@@ -120,11 +131,52 @@ subprojects {
 
 
     }
+    
+ 
+    sourceSets {
+        // 一个代表一个源码集
+        main {
+            // 编译后放到 output 目录的文件
+            java {
+                // 该方法会覆盖默认的源码路径
+                srcDirs = ['src/main/java']       
+                
+                // 该方法会在原有的路径上追加额外的源码路径
+                srcDir 'src/main/java'  
+                
+                // 排除 main/java 目录下，包名为 some.unwanted.package 下的所有类
+                exclude 'some/unwanted/package/**'  
+            }
+             
+            // 直接复制到 output 目录的文件， java 插件默认路径为 [${project.projectDir}/src/${sourceSet.name}/resources]
+            resources { 
+            }
+        }
 
-    /** TODO 表明用于编译的 .java 文件的编码格式是 UTF-8 */
-    tasks.withType(JavaCompile) {
-        options.encoding = "UTF-8"
+        test {
+            java {
+                srcDirs = ['test']
+            }
+        }
     }
+    
+    
+    
+    /** TODO 配置 .java 文件的编译参数 */
+    tasks.withType(JavaCompile) {   // 类型为 JavaCompile 的任务的 options 参数配置
+        options.encoding = "UTF-8"   // 配置 .java 文件的编码格式为 UTF-8
+    }
+    
+    compileJava {       // 编译参数配置
+        options.incremental = true
+        options.fork = true
+        options.failOnError = false
+    }
+    
+    compileTestJava {   // 测试编译参数配置
+    }
+    
+    
     
     
     /** TODO 单元测试配置 ********************************************************************/
