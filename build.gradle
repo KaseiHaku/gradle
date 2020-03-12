@@ -195,5 +195,12 @@ subprojects {
         }
     }
 
+    /** TODO idea 插件引入的 DSL ********************************************************************/
+    idea {
+        module {
+            downloadJavadoc = true
+            downloadSources = true
+        }
+    }
 
 }
