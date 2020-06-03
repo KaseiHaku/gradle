@@ -92,6 +92,12 @@ subprojects {
          * */
 
         /** TODO Convenient Develop */
+        /** 
+         * spring-boot-dependencies 用于管理 jar 包版本，
+         * spring-boot-starter-parent 也是继承 spring-boot-dependencies 的，只是添加了额外的东西而已
+         * io.spring.platform 继承 spring-boot-starter-parent，单是已经废弃
+         * */
+        providedCompile group: 'org.springframework.boot', name: 'spring-boot-dependencies', version: '2.3.0.RELEASE', ext: 'pom'
         /** lombok
          * 自动生成 getter setter，而不用写在代码里，需要 IDEA 安装 lombok 插件，并修改 "Settings > Build > Compiler > Annotation Processors" 为 Enable
          * annotationProcessor 是为 gradle 引入 lombok 编译时注解处理器的依赖
