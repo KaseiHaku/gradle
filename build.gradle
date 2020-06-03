@@ -26,12 +26,13 @@ plugins {
     // 用于 java web 项目打成 war 包，不能 apply false
     // id 'war'
     // 用于运行 java web 项目 
-    id 'org.gretty' version '3.0.1' apply false
-    // 作用： 引入 gradle 构建 spring boot 项目所需要的 task，且引入的 task 会根据 gradle 中引入的插件动态变化
-    id 'org.springframework.boot' version '2.2.2.RELEASE' apply false
-    // 作用： 让 srping boot 来管理各个依赖的版本，而不是手工指定，
-    // 好处： spring boot 管理的各个版本的依赖，都是经过测试的，已经废弃，替换为 spring-boot-dependencies 或者 spring-boot-starter-parent
+    id 'org.gretty' version '3.0.1' apply false   
+    // 作用： 添加该插件会自动引入 spring-boot-dependencies bom，让 srping boot 来管理各个依赖的版本，而不是手工指定，
+    // 好处： spring boot 管理的各个版本的依赖，都是经过测试的，已经废弃，替换为  或者 
     id 'io.spring.dependency-management' version "1.0.8.RELEASE" apply false
+    // 作用： 引入 spring-boot-starter-parent bom (继承自 spring-boot-dependencies bom)，
+    // 该 bom 中包含 spring boot 项目所需要的 task，且引入的 task 会根据 gradle 中引入的插件动态变化
+    id 'org.springframework.boot' version '2.2.2.RELEASE' apply false
     // 作用：让 Entity 类不用写 getter setter
     id "io.freefair.lombok" version "4.1.6"
     // IDEA 整合操作，不能 apply false
