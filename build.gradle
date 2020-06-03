@@ -30,7 +30,7 @@ plugins {
     // 作用： 引入 gradle 构建 spring boot 项目所需要的 task，且引入的 task 会根据 gradle 中引入的插件动态变化
     id 'org.springframework.boot' version '2.2.2.RELEASE' apply false
     // 作用： 让 srping boot 来管理各个依赖的版本，而不是手工指定，
-    // 好处： spring boot 管理的各个版本的依赖，都是经过测试的
+    // 好处： spring boot 管理的各个版本的依赖，都是经过测试的，已经废弃，替换为 spring-boot-dependencies 或者 spring-boot-starter-parent
     id 'io.spring.dependency-management' version "1.0.8.RELEASE" apply false
     // 作用：让 Entity 类不用写 getter setter
     id "io.freefair.lombok" version "4.1.6"
